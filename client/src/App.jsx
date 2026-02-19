@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Login from './pages/Login';
@@ -13,29 +13,6 @@ import TimeTracking from './pages/TimeTracking';
 import Payments from './pages/Payments';
 import Analytics from './pages/Analytics';
 import Settings from './pages/Settings';
-import Loader from './components/Loader';
-
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
-
-  if (loading) {
-    return <Loader fullScreen />;
-  }
-
-  return isAuthenticated ? children : <Navigate to="/login" />;
-};
-
-// Public Route Component (redirect to dashboard if authenticated)
-const PublicRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
-
-  if (loading) {
-    return <Loader fullScreen />;
-  }
-
-  return !isAuthenticated ? children : <Navigate to="/dashboard" />;
-};
 
 function App() {
   return (
@@ -66,33 +43,7 @@ function App() {
           />
 
           <Routes>
-            {/* Public Routes */}
-            <Route
-              path="/login"
-              element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <PublicRoute>
-                  <Register />
-                </PublicRoute>
-              }
-            />
-
-            {/* Protected Routes */}
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            >
+            <Route path="/" element={<DashboardLayout />}>
               <Route index element={<Navigate to="/dashboard" />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="clients" element={<Clients />} />
@@ -104,6 +55,9 @@ function App() {
               <Route path="settings" element={<Settings />} />
             </Route>
 
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
             {/* 404 */}
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </Routes>
@@ -112,5 +66,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;

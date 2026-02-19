@@ -68,34 +68,35 @@ const Dashboard = () => {
             value: stats?.totalClients || 0,
             icon: UsersIcon,
             color: 'bg-blue-500',
-            change: '+12%',
-            trend: 'up',
+            change: '0%',
+            trend: 'none',
         },
         {
             title: 'Active Projects',
             value: stats?.activeProjects || 0,
             icon: FolderIcon,
             color: 'bg-purple-500',
-            change: '+8%',
-            trend: 'up',
+            change: '0%',
+            trend: 'none',
         },
         {
             title: 'Total Revenue',
             value: formatCurrency(stats?.totalRevenue || 0),
             icon: CurrencyDollarIcon,
             color: 'bg-green-500',
-            change: '+23%',
-            trend: 'up',
+            change: '0%',
+            trend: 'none',
         },
         {
             title: 'Pending Revenue',
             value: formatCurrency(stats?.pendingRevenue || 0),
             icon: DocumentTextIcon,
             color: 'bg-orange-500',
-            change: '-5%',
-            trend: 'down',
+            change: '0%',
+            trend: 'none',
         },
     ];
+
 
     const projectStatusData = projectStatus
         ? Object.entries(projectStatus).map(([key, value]) => ({
@@ -140,13 +141,10 @@ const Dashboard = () => {
                                     {stat.value}
                                 </p>
                                 <div className="flex items-center gap-2 mt-2">
-                                    {stat.trend === 'up' ? (
-                                        <ArrowTrendingUpIcon className="w-4 h-4 text-green-500" />
-                                    ) : (
-                                        <ArrowTrendingDownIcon className="w-4 h-4 text-red-500" />
-                                    )}
+                                    {stat.trend === 'up' && <ArrowTrendingUpIcon className="w-4 h-4 text-green-500" />}
+                                    {stat.trend === 'down' && <ArrowTrendingDownIcon className="w-4 h-4 text-red-500" />}
                                     <span
-                                        className={`text-sm font-medium ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                                        className={`text-sm font-medium ${stat.trend === 'up' ? 'text-green-600' : stat.trend === 'down' ? 'text-red-600' : 'text-gray-500'
                                             }`}
                                     >
                                         {stat.change}

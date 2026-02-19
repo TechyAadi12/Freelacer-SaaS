@@ -72,31 +72,32 @@ const Analytics = () => {
             title: 'Total Revenue',
             value: formatCurrency(stats?.totalRevenue || 0),
             icon: CurrencyDollarIcon,
-            change: '+12.5%',
-            positive: true
+            change: '0%',
+            trend: 'none'
         },
         {
             title: 'Active Projects',
             value: stats?.activeProjects || 0,
             icon: BriefcaseIcon,
-            change: '+5.2%',
-            positive: true
+            change: '0%',
+            trend: 'none'
         },
         {
             title: 'Total Clients',
             value: stats?.totalClients || 0,
             icon: UserGroupIcon,
-            change: '+2.1%',
-            positive: true
+            change: '0%',
+            trend: 'none'
         },
         {
             title: 'Pending Amount',
             value: formatCurrency(stats?.pendingRevenue || 0),
             icon: ArrowTrendingUpIcon,
-            change: '-1.5%',
-            positive: false
+            change: '0%',
+            trend: 'none'
         }
     ];
+
 
     return (
         <div className="space-y-6 animate-fade-in">
@@ -115,12 +116,14 @@ const Analytics = () => {
                             <metric.icon className="w-8 h-8 text-primary-500 opacity-80" />
                         </div>
                         <div className="mt-4 flex items-center text-sm">
-                            <span className={`font-medium ${metric.positive ? 'text-green-600' : 'text-red-600'} flex items-center gap-1`}>
-                                {metric.positive ? <ArrowTrendingUpIcon className="w-4 h-4" /> : <ArrowTrendingDownIcon className="w-4 h-4" />}
+                            <span className={`font-medium ${metric.trend === 'up' ? 'text-green-600' : metric.trend === 'down' ? 'text-red-600' : 'text-gray-400'} flex items-center gap-1`}>
+                                {metric.trend === 'up' && <ArrowTrendingUpIcon className="w-4 h-4" />}
+                                {metric.trend === 'down' && <ArrowTrendingDownIcon className="w-4 h-4" />}
                                 {metric.change}
                             </span>
                             <span className="text-gray-400 ml-2">from last month</span>
                         </div>
+
                     </Card>
                 ))}
             </div>

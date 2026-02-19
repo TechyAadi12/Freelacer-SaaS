@@ -16,29 +16,8 @@ const Navbar = ({ onMenuClick }) => {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
 
-    const notifications = [
-        {
-            id: 1,
-            title: 'New invoice paid',
-            message: 'Invoice #INV-00003 has been paid',
-            time: '5 minutes ago',
-            unread: true,
-        },
-        {
-            id: 2,
-            title: 'Project deadline approaching',
-            message: 'Website Redesign is due in 3 days',
-            time: '2 hours ago',
-            unread: true,
-        },
-        {
-            id: 3,
-            title: 'New client added',
-            message: 'Startup Ventures LLC has been added',
-            time: '1 day ago',
-            unread: false,
-        },
-    ];
+    const notifications = [];
+
 
     return (
         <header className="sticky top-0 z-30 h-16 bg-white dark:bg-dark-800 border-b border-gray-200 dark:border-dark-700">
