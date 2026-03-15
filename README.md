@@ -63,7 +63,7 @@ Freelacer SaaS/
 ```
 
 ## 🔐 Authentication
-This version has been simplified to remove the complex authentication/admin requirement. You are automatically "logged in" as an Admin User. All features are accessible immediately.
+This version uses a very lightweight client-side authentication mock. You can log in or register with any email, and your session is stored in your browser's Local Storage.
 
 ## 💾 Data Management
 All data you create (Clients, Projects, Invoices, etc.) is saved directly to your browser's **Local Storage**. This means:

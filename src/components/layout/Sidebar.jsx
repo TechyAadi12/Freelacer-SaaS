@@ -16,10 +16,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: 'Clients', to: '/clients', icon: UsersIcon },
         { name: 'Projects', to: '/projects', icon: FolderIcon },
         { name: 'Invoices', to: '/invoices', icon: DocumentTextIcon },
-        { name: 'Time Tracking', to: '/time-tracking', icon: ClockIcon },
         { name: 'Payments', to: '/payments', icon: CreditCardIcon },
         { name: 'Analytics', to: '/analytics', icon: ChartBarIcon },
-        { name: 'Settings', to: '/settings', icon: Cog6ToothIcon },
     ];
 
     return (

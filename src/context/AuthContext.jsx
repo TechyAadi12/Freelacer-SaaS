@@ -14,23 +14,25 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         const savedUser = localStorage.getItem('user');
-        return savedUser ? JSON.parse(savedUser) : { name: 'Admin User', email: 'admin@example.com' };
+        return savedUser ? JSON.parse(savedUser) : null;
     });
     const [loading, setLoading] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        const token = localStorage.getItem('token');
+        return !!(token && localStorage.getItem('user'));
+    });
 
     useEffect(() => {
-        // Just ensure user is in localStorage
-        if (!localStorage.getItem('user')) {
+        if (user) {
             localStorage.setItem('user', JSON.stringify(user));
-        }
-        if (!localStorage.getItem('token')) {
-            localStorage.setItem('token', 'mock-token');
         }
     }, [user]);
 
     const login = async (email, password) => {
-        const mockUser = { name: 'Admin User', email: email || 'admin@example.com' };
+        const mockUser = {
+            name: email ? email.split('@')[0] : 'User',
+            email: email || 'user@example.com',
+        };
         localStorage.setItem('token', 'mock-token');
         localStorage.setItem('user', JSON.stringify(mockUser));
         setUser(mockUser);
@@ -40,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (userData) => {
-        const mockUser = { ...userData, name: userData.name || 'Admin' };
+        const mockUser = { ...userData, name: userData.name || userData.email?.split('@')[0] || 'User' };
         localStorage.setItem('token', 'mock-token');
         localStorage.setItem('user', JSON.stringify(mockUser));
         setUser(mockUser);
@@ -52,7 +54,8 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        setIsAuthenticated(true); // Keep it true contextually or handle redirection
+        setUser(null);
+        setIsAuthenticated(false);
         toast.success('Logged out successfully');
     };
 

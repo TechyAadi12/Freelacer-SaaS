@@ -9,10 +9,8 @@ import Dashboard from './pages/Dashboard';
 import Clients from './pages/Clients';
 import Projects from './pages/Projects';
 import Invoices from './pages/Invoices';
-import TimeTracking from './pages/TimeTracking';
 import Payments from './pages/Payments';
 import Analytics from './pages/Analytics';
-import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -49,10 +47,8 @@ function App() {
               <Route path="clients" element={<Clients />} />
               <Route path="projects" element={<Projects />} />
               <Route path="invoices" element={<Invoices />} />
-              <Route path="time-tracking" element={<TimeTracking />} />
               <Route path="payments" element={<Payments />} />
               <Route path="analytics" element={<Analytics />} />
-              <Route path="settings" element={<Settings />} />
             </Route>
 
             <Route path="/login" element={<Login />} />

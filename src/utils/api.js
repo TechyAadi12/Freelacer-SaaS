@@ -7,7 +7,11 @@ const api = {
     get: async (url) => {
         await simulateDelay();
         if (url.includes('/auth/me')) {
-            const user = JSON.parse(localStorage.getItem('user') || '{"name": "Admin User", "email": "admin@example.com"}');
+            const stored = localStorage.getItem('user');
+            if (!stored) {
+                return { data: { success: false, user: null } };
+            }
+            const user = JSON.parse(stored);
             return { data: { success: true, user } };
         }
         if (url === '/clients') return { data: { clients: storage.getClients() } };
