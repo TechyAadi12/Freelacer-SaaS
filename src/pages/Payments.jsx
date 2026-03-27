@@ -8,7 +8,7 @@ import Loader from '../components/Loader';
 import Modal from '../components/Modal';
 import Input from '../components/Input';
 import Select from '../components/Select';
-import { PlusIcon, BanknotesIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, BanknotesIcon, TrashIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 const Payments = () => {
@@ -78,6 +78,18 @@ const Payments = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this payment?')) return;
+        try {
+            await api.delete(`/payments/${id}`);
+            toast.success('Payment deleted successfully');
+            fetchData();
+        } catch (error) {
+            console.error('Error deleting payment:', error);
+            toast.error('Failed to delete payment');
+        }
+    };
+
     if (loading) return <Loader fullScreen />;
 
     return (
@@ -106,12 +118,13 @@ const Payments = () => {
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Ref ID</th>
+                                <th className="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {payments.length === 0 ? (
                                 <tr>
-                                    <td colSpan="7" className="text-center py-8 text-gray-500">
+                                    <td colSpan="8" className="text-center py-8 text-gray-500">
                                         No payments found. Record your first payment.
                                     </td>
                                 </tr>
@@ -152,6 +165,16 @@ const Payments = () => {
                                             <span className="text-xs font-mono text-gray-500">
                                                 {payment.transactionId || payment.stripePaymentIntentId || '-'}
                                             </span>
+                                        </td>
+                                        <td className="text-right">
+                                            <div className="flex items-center justify-end gap-2">
+                                                <button
+                                                    onClick={() => handleDelete(payment._id)}
+                                                    className="p-1 text-gray-500 hover:text-red-600 transition-colors"
+                                                >
+                                                    <TrashIcon className="w-4 h-4" />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
